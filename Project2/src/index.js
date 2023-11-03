@@ -16,6 +16,7 @@ scene.add(camera);
 const canvas = document.querySelector(".webgl");
 
 const renderer = new THREE.WebGLRenderer({ canvas }); //default renderer
+renderer.setPixelRatio(2) //default is 1, for smooth edge
 
 const geometry = new THREE.SphereGeometry(3, 64, 64);
 const material = new THREE.MeshStandardMaterial({
@@ -26,27 +27,19 @@ const mesh = new THREE.Mesh(geometry, material);
 scene.add(mesh);
 
 const light = new THREE.PointLight(0xffffff, 1, 100);
-light.position.set(0, 10, 10);
+light.position.set(0, 20, 20);
 scene.add(light);
 
 renderer.setSize(window.innerWidth, window.innerHeight);
 
 const orbit = new OrbitControls(camera, canvas);
+orbit.enableDamping = true;
+orbit.enablePan = false;
+orbit.enableZoom = false;
+orbit.autoRotate = true;
+orbit.autoRotateSpeed = 5;
 
 renderer.render(scene, camera);
-
-// scene.background = new THREE.Color(0xff8800) //background color
-
-// const camera = new THREE.PerspectiveCamera(
-//     75,
-//     window.innerWidth / window.innerHeight,
-//     0.1,
-//     1000
-// )
-// camera.position.z = 2
-
-// renderer.setSize(window.innerWidth, window.innerHeight)
-// document.body.appendChild(renderer.domElement)
 
 window.addEventListener("resize", onWindowResize, false);
 function onWindowResize() {
@@ -57,9 +50,8 @@ function onWindowResize() {
 
 const loop = () => {
   renderer.render(scene, camera);
+  orbit.update()
   window.requestAnimationFrame(loop);
 };
 
 loop();
-
-
