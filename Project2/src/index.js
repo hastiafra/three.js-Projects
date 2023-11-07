@@ -3,7 +3,6 @@ import "./style/main.css";
 import { gsap } from "gsap";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
-
 const scene = new THREE.Scene();
 
 const camera = new THREE.PerspectiveCamera(
@@ -18,7 +17,7 @@ scene.add(camera);
 const canvas = document.querySelector(".webgl");
 
 const renderer = new THREE.WebGLRenderer({ canvas }); //default renderer
-renderer.setPixelRatio(2) //default is 1, for smooth edge
+renderer.setPixelRatio(2); //default is 1, for smooth edge
 
 const geometry = new THREE.SphereGeometry(3, 64, 64);
 const material = new THREE.MeshStandardMaterial({
@@ -52,11 +51,11 @@ function onWindowResize() {
 
 const loop = () => {
   renderer.render(scene, camera);
-  orbit.update()
+  orbit.update();
   window.requestAnimationFrame(loop);
 };
 
 loop();
 
-const tl = gsap.timeline({defaults: {duration: 1}})
-tl.fromTo(mesh.scale,{z:0, x:0, y:0})
+const tl = gsap.timeline({ defaults: { duration: 2 } });
+tl.fromTo(mesh.scale, { z: 0, x: 0, y: 0 }, {z:1, x:1, y:1});
